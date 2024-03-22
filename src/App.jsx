@@ -6,11 +6,19 @@ import { differences } from './data/differences';
 import { useState } from 'react';
 
 export default function App() {
-    const [content, setContent] = useState('clicking button');
+    const [contentType, setContentType] = useState(null);
 
     function handleClick(type) {
-        setContent(type);
+        setContentType(type);
     }
+
+    // let tubContent = null;
+
+    // if (contentType) {
+    //     tubContent = <p>{differences[contentType]}</p>;
+    // } else {
+    //     tubContent = <p>click button</p>;
+    // }
 
     return (
         <>
@@ -19,24 +27,43 @@ export default function App() {
                 <main>
                     <section>
                         <ul>
-                            <Section
-                                title={sectionData[0].title}
-                                description={sectionData[0].description}
-                            />
+                            {sectionData.map((item) => (
+                                <Section {...item} />
+                            ))}
                         </ul>
                     </section>
                     <section>
                         <h3>Title</h3>
-                        <Button onClick={() => handleClick('way')}>
+
+                        <Button
+                            isActive={contentType === 'way'}
+                            onClick={() => handleClick('way')}
+                        >
                             Text 1
                         </Button>
-                        <Button onClick={() => handleClick('easy')}>
+                        <Button
+                            isActive={contentType === 'easy'}
+                            onClick={() => handleClick('easy')}
+                        >
                             Text 2
                         </Button>
-                        <Button onClick={() => handleClick('program')}>
+                        <Button
+                            isActive={contentType === 'program'}
+                            onClick={() => handleClick('program')}
+                        >
                             Text 3
                         </Button>
-                        <p>{differences[content]}</p>
+
+                        {/* {contentType ? (
+                            <p>{differences[contentType]}</p>
+                        ) : (
+                            <p>click button</p>
+                        )} */}
+
+                        {/* {tubContent} */}
+
+                        {!contentType && <p>click button</p>}
+                        {contentType && <p>{differences[contentType]}</p>}
                     </section>
                 </main>
             </div>
